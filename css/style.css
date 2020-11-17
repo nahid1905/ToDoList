@@ -1,13 +1,19 @@
 html{
     padding: 70px;
     margin: 0px;
+    font-size: 20px;
 }
 input{
-    height: 30px;
+    /* height: 30px;
     width: 15rem;
     padding-left: 10px;
+    margin-right: 10px; */
 }
-.to-do{
+form{
+    display: flex;
+    justify-content: center;
+}
+.to-do-list{
     margin-top: 50px;
     width: 400px;
     height: 500px;
@@ -16,19 +22,48 @@ input{
     border-radius: 10px;
     padding: 15px;
     overflow: auto;
+    display: inline-block;
 }
-.to-do .item{
+.item{
     width: 100%;
     background-color: rgb(212, 97, 97);
-    height: 50px;
     border-radius: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
+    padding: 10px;
+    padding-right: 0;
     color: white;
     margin-bottom: 10px;
+    cursor: pointer;
 }
-#add{
+.item::before{
+    content: '';
+    width: 1em;
+    height: 1em;
+}
+.item .buttons{
+    display: inline-block;
+    float: right;
+    padding-right: 20px;
+}
+.item .buttons i{
+    margin-left: 5px;
+}
+input#add{
     display: inline;
     cursor: pointer;
     height: 35px;
+}
+.completed-list{
+    display: inline-block;
+    margin-top: 50px;
+    width: 400px;
+    height: 500px;
+    background-color:rgb(129 134 123);
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: auto;
+}
+.lists{
+    display: flex;
+    justify-content: space-between;
 }
