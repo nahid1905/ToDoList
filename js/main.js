@@ -13,8 +13,8 @@ function add(){
     div.setAttribute('class', 'item');
     div.innerText = input.value;
     toDo.appendChild(div);
-    console.log(document.body.appendChild(div));
-    console.log(input.value);  
+    // console.log(document.body.appendChild(div));
+    // console.log(input.value);
     input.value = '';
 }
 addButton.addEventListener('click', add);
