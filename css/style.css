@@ -5,6 +5,7 @@ html{
 input{
     height: 30px;
     width: 15rem;
+    padding-left: 10px;
 }
 .to-do{
     margin-top: 50px;
@@ -26,11 +27,7 @@ input{
     color: white;
     margin-bottom: 10px;
 }
-.completed{
-
-}
 #add{
-    /* background-color: rgb(6, 146, 13); */
     display: inline;
     cursor: pointer;
     height: 35px;
