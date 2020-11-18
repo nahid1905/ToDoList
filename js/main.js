@@ -72,7 +72,8 @@ trashBtn.addEventListener('click', function(ev){
 addBtn.addEventListener('click', add);
 
 
-var dropZoneOne = document.querySelector('.completed-list');
+var dropZoneCompleted = document.querySelector('.completed-list');
+var dropZoneToDo = document.querySelector('.to-do-list');
 var dragElements = document.querySelectorAll('.to-do-list .item');
 var elementDragged = null;
 
@@ -88,7 +89,7 @@ for (var i = 0; i < dragElements.length; i++) {
     });
 };
 
-dropZoneOne.addEventListener('dragover', function(e) {
+dropZoneCompleted.addEventListener('dragover', function(e) {
     if (e.preventDefault) {
         e.preventDefault();
     }
@@ -96,21 +97,21 @@ dropZoneOne.addEventListener('dragover', function(e) {
     return false;
 });
 
-dropZoneOne.addEventListener('dragenter', function(e) {
+dropZoneCompleted.addEventListener('dragenter', function(e) {
 });
 
 // Event Listener for when the dragged element leaves the drop zone.
-dropZoneOne.addEventListener('dragleave', function(e) {
+dropZoneCompleted.addEventListener('dragleave', function(e) {
     this.className = "";
 });
 
 
-dropZoneOne.addEventListener('drop', function(e) {
+dropZoneCompleted.addEventListener('drop', function(e) {
     if (e.preventDefault) e.preventDefault(); 
     if (e.stopPropagation) e.stopPropagation(); 
-    this.innerHTML = "Dropped " + e.dataTransfer.getData('text');
-
-    document.querySelector('#drag-elements').removeChild(elementDragged);
+    this.innerHTML += "" + e.dataTransfer.getData('text');
+    complete(1);
+    // document.querySelector('#drag-elements').removeChild(elementDragged);
     elementDragged = null;
 
     return false;
