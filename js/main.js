@@ -35,6 +35,7 @@ function createToDoItem(itemId){
     editBtn = buttons.appendChild(editBtn);  
     editBtn.setAttribute('class', 'fa fa-edit');
     editBtn.setAttribute('id', itemId);
+    editBtn.addEventListener('click', editItem);
 
     trashBtn = buttons.appendChild(trashBtn);
     trashBtn.setAttribute('class', 'fa fa-trash');
@@ -55,6 +56,11 @@ function deleteItem(event){
     let itemForDelete = document.getElementById(event.target.id);
     itemForDelete.remove();
 }
+function editItem(event){
+    let itemForEdit = document.getElementById(event.target.id);
+    input.value = itemForEdit.textContent;
+    addBtn.value = "Edit";
+}
 // completed tasks add to CompletedList 
 function complete(id){
     let itemForComplete = document.getElementById(id);
@@ -64,15 +70,14 @@ function complete(id){
 // unchecked tasks back to todolist from completedlist
 function uncomplete(id){
     let itemForUncomplete = document.getElementById(id);
-    itemForUncomplete.classList.remove('completed');
+    // check.checked = false;
     toDo.appendChild(itemForUncomplete);
+    itemForUncomplete.classList.remove('completed');
 }
 addBtn.addEventListener('click', add);
 
-
 // drag and drop
 for (var i = 0; i < allToDoItems.length; i++) {
-
     allToDoItems[i].addEventListener('dragstart', function(e) {
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text', this.innerHTML);
@@ -91,9 +96,6 @@ dropZoneCompleted.addEventListener('dragover', function(e) {
     return false;
 });
 
-dropZoneCompleted.addEventListener('dragenter', function(e) {
-});
-
 // Event Listener for when the dragged element leaves the drop zone.
 dropZoneCompleted.addEventListener('dragleave', function(e) {
     this.className = "";
@@ -103,10 +105,16 @@ dropZoneCompleted.addEventListener('dragleave', function(e) {
 dropZoneCompleted.addEventListener('drop', function(e) {
     if (e.preventDefault) e.preventDefault(); 
     if (e.stopPropagation) e.stopPropagation(); 
-    this.innerHTML += "" + e.dataTransfer.getData('text');
     complete(1);
-    // document.querySelector('#drag-elements').removeChild(elementDragged);
+    this.innerHTML += "" + e.dataTransfer.getData('text');
+    document.querySelector('#drag-elements').removeChild(elementDragged);
     elementDragged = null;
-
+    var data = ev.dataTransfer.getData("text");
+    thisdiv = ev.target;
+    document.getElementById(data).insertBefore(thisdiv);
     return false;
 });
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
