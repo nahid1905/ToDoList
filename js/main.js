@@ -42,9 +42,7 @@ function add(){
 }
 function addToCompletedList(item){
     // let item = document.getElementById(itemId);
-    item.style.textDecoration = 'line-through';
-    item.style.backgroundColor = 'rgb(93 138 35)';
-    completedList.appendChild(item);
+    
 }
 function deleteItemFromToDo(itemId){
     let itemForDelete = document.getElementById(itemId);
@@ -52,13 +50,23 @@ function deleteItemFromToDo(itemId){
 }
 function complete(itemId){
     let itemForComplete = document.getElementById(itemId);
-    console.log(itemForComplete);
-    addToCompletedList(itemForComplete)
+    itemForComplete.classList.add('completed');
+    completedList.appendChild(itemForComplete);
+}
+function uncomplete(itemId){
+    let itemForUncomplete = document.getElementById(itemId);
+    itemForUncomplete.classList.remove('completed');
+    toDo.appendChild(itemForUncomplete);
 }
 
-
 checkBox.addEventListener('click', function(ev){
-    complete(ev.target.id);
+    let id = ev.target.id;
+    if(checkBox.checked){
+        complete(id);
+    }
+    else{
+        uncomplete(id);
+    }
 });
 trashBtn.addEventListener('click', function(ev){
     deleteItemFromToDo(ev.target.id);
