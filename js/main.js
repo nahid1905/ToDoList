@@ -2,21 +2,22 @@ var input = document.querySelector('#toDoInput');
 var addBtn = document.querySelector('#add');
 var toDo = document.querySelector('.to-do-list');
 var completedList = document.querySelector('.completed-list');
-var toDoItem = document.querySelector('.item');
-var item = document.createElement('div');
-var buttons = document.createElement('div')
+var buttons = document.createElement('div');
 var editBtn = document.createElement('i');
 var trashBtn = document.createElement('i');
 var checkBox = document.createElement('INPUT');
 
-var id = 0
+let id = 0
 
 
 // create item template
 function createToDoItem(itemId){
+
+    var item = document.createElement('div');
     let itemDiv = document.body.appendChild(item);
     itemDiv.setAttribute('class', 'item');
     itemDiv.setAttribute('id', itemId);
+    
     let checkBoxIcon = itemDiv.appendChild(checkBox);
     checkBoxIcon.setAttribute('type', 'checkbox');
     checkBoxIcon.setAttribute('id', itemId);
@@ -39,10 +40,6 @@ function add(){
         createToDoItem(id);
         input.value = '';
     }
-}
-function addToCompletedList(item){
-    // let item = document.getElementById(itemId);
-    
 }
 function deleteItemFromToDo(itemId){
     let itemForDelete = document.getElementById(itemId);
@@ -72,4 +69,34 @@ trashBtn.addEventListener('click', function(ev){
     deleteItemFromToDo(ev.target.id);
     console.log(ev.target.id);
 });
+
+function test(){
+    console.log('salam aleykum');
+}
 addBtn.addEventListener('click', add);
+
+item.addEventListener("dragenter", test);
+item.addEventListener("dragexit", test);
+item.addEventListener("dragover", test);
+item.addEventListener("drop", test);
+
+
+function dragEnter(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+}
+
+function dragExit(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+}
+
+function dragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+}
+
+function drop(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+}
