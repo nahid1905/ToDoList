@@ -12,12 +12,12 @@ let id = 0
 
 // create item template
 function createToDoItem(itemId){
-
     var item = document.createElement('div');
+    
     let itemDiv = document.body.appendChild(item);
     itemDiv.setAttribute('class', 'item');
     itemDiv.setAttribute('id', itemId);
-    
+    item.setAttribute('draggable', true);
     let checkBoxIcon = itemDiv.appendChild(checkBox);
     checkBoxIcon.setAttribute('type', 'checkbox');
     checkBoxIcon.setAttribute('id', itemId);
@@ -69,34 +69,49 @@ trashBtn.addEventListener('click', function(ev){
     deleteItemFromToDo(ev.target.id);
     console.log(ev.target.id);
 });
-
-function test(){
-    console.log('salam aleykum');
-}
 addBtn.addEventListener('click', add);
 
-item.addEventListener("dragenter", test);
-item.addEventListener("dragexit", test);
-item.addEventListener("dragover", test);
-item.addEventListener("drop", test);
+
+var dropZoneOne = document.querySelector('.completed-list');
+var dragElements = document.querySelectorAll('.to-do-list .item');
+var elementDragged = null;
+
+for (var i = 0; i < dragElements.length; i++) {
+
+    dragElements[i].addEventListener('dragstart', function(e) {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text', this.innerHTML);
+        elementDragged = this;
+    });
+    dragElements[i].addEventListener('dragend', function(e) {
+        elementDragged = null;
+    });
+};
+
+dropZoneOne.addEventListener('dragover', function(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+});
+
+dropZoneOne.addEventListener('dragenter', function(e) {
+});
+
+// Event Listener for when the dragged element leaves the drop zone.
+dropZoneOne.addEventListener('dragleave', function(e) {
+    this.className = "";
+});
 
 
-function dragEnter(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-}
+dropZoneOne.addEventListener('drop', function(e) {
+    if (e.preventDefault) e.preventDefault(); 
+    if (e.stopPropagation) e.stopPropagation(); 
+    this.innerHTML = "Dropped " + e.dataTransfer.getData('text');
 
-function dragExit(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-}
+    document.querySelector('#drag-elements').removeChild(elementDragged);
+    elementDragged = null;
 
-function dragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-}
-
-function drop(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-}
+    return false;
+});
