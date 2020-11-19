@@ -45,7 +45,11 @@ input[type='checkbox'] {
 .item .buttons i{
     margin-left: 5px;
 }
-input#add{
+.item p{
+    display: inline;
+}
+#add,
+#edit{
     display: inline;
     cursor: pointer;
     height: 35px;

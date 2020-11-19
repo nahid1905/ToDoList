@@ -6,6 +6,8 @@ var dropZoneCompleted = document.querySelector('.completed-list');
 var dropZoneToDo = document.querySelector('.to-do-list');
 var elementDragged = null;
 var allToDoItems = document.querySelectorAll('.to-do-list .item');
+var formSubmit = document.querySelector('#formSubmit');
+let editBtn;
 
 let isEdit;
 
@@ -14,6 +16,7 @@ let id = 0;
 // create item template
 function createToDoItem(itemId){
     let item = document.createElement('div');
+    let itemText = document.createElement('p')
     let checkBox = document.createElement('input');
     let trashBtn = document.createElement('i');
     let editBtn = document.createElement('i');
@@ -27,7 +30,8 @@ function createToDoItem(itemId){
     checkBox = item.appendChild(checkBox);
     checkBox.setAttribute('type', 'checkbox');
     checkBox.setAttribute('id', itemId);
-    item.textContent = input.value;
+    itemText = item.appendChild(itemText);
+    itemText.textContent = input.value;
     item.insertBefore(checkBox, item.firstChild);
     checkBox.addEventListener('click', () => checkBox.checked ? complete(itemId) : uncomplete(itemId))
 
@@ -61,6 +65,7 @@ function add(){
     }
     else{
         if(input.value != ''){
+            
             input.value = '';
             addBtn.value = 'Add';
             isEdit = false;
@@ -73,17 +78,29 @@ function deleteItem(id){
     itemForDelete.remove();
 }
 function editItem(id){
+    if(!editBtn){
+        editBtn = document.createElement('input');
+        editBtn = formSubmit.appendChild(editBtn);
+        editBtn.setAttribute('id', 'edit');
+        editBtn.setAttribute('type', 'submit')
+        editBtn.value = "Edit";
+        addBtn.disabled = true;
+    }
     let itemForEdit = document.getElementById(id);
     input.value = itemForEdit.textContent;
-    addBtn.value = "Edit";
-    addBtn.setAttribute('id', 'edit');
-    isEdit = true;
-    // var editBtn = document.querySelector('#edit');
-    // let idEditItem = itemForEdit.id;
-    // editBtn.addEventListener('click', function(e){
-    //     itemForEdit.textContent = input.value;
-    // })
+    editBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        if(input.value != ''){
+            let itemText = itemForEdit.childNodes[1];
+            itemText.textContent = input.value;
+            input.value = '';
+            editBtn.remove();
+            editBtn = null;
+            addBtn.disabled = false;
+        }
+    })
 }
+
 // completed tasks add to CompletedList 
 function complete(id){
     let itemForComplete = document.getElementById(id);
