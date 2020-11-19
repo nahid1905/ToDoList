@@ -73,3 +73,11 @@ input[type='checkbox'] {
     text-decoration: line-through;
     background-color: rgb(93 138 35);
 }
+@media only screen and (max-width: 1092px){
+    .lists{
+        display: block;
+    }
+    .lists .to-do-list{
+        display: block;
+    }
+}

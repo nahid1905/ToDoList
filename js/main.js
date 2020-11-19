@@ -136,17 +136,11 @@ dropZoneCompleted.addEventListener('dragover', function(e) {
     return false;
 });
 
-// Event Listener for when the dragged element leaves the drop zone.
-dropZoneCompleted.addEventListener('dragleave', function(e) {
-    this.className = "";
-});
-
-
 dropZoneCompleted.addEventListener('drop', function(e) {
     if (e.preventDefault) e.preventDefault(); 
     if (e.stopPropagation) e.stopPropagation(); 
     complete(1);
-    this.innerHTML += "" + e.dataTransfer.getData('text');
+    this.innerHTML += e.dataTransfer.getData('text');
     document.querySelector('#drag-elements').removeChild(elementDragged);
     elementDragged = null;
     var data = ev.dataTransfer.getData("text");
