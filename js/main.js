@@ -7,7 +7,9 @@ var dropZoneToDo = document.querySelector('.to-do-list');
 var elementDragged = null;
 var allToDoItems = document.querySelectorAll('.to-do-list .item');
 
-let id = 0
+let isEdit;
+
+let id = 0;
 
 // create item template
 function createToDoItem(itemId){
@@ -35,31 +37,52 @@ function createToDoItem(itemId){
     editBtn = buttons.appendChild(editBtn);  
     editBtn.setAttribute('class', 'fa fa-edit');
     editBtn.setAttribute('id', itemId);
-    editBtn.addEventListener('click', editItem);
+    editBtn.addEventListener('click', function(){
+        editItem(itemId);
+    });
 
     trashBtn = buttons.appendChild(trashBtn);
     trashBtn.setAttribute('class', 'fa fa-trash');
     trashBtn.setAttribute('id', itemId);
-    trashBtn.addEventListener('click', deleteItem);
+    trashBtn.addEventListener('click', function(){
+        deleteItem(itemId);
+    });
     toDo.appendChild(item);
 }
 
 function add(){
     event.preventDefault();
-    if(input.value != ''){
-        id++;
-        createToDoItem(id);
-        input.value = '';
+    if(!isEdit){
+        if(input.value != ''){
+            id++;
+            createToDoItem(id);
+            input.value = '';
+        }
     }
+    else{
+        if(input.value != ''){
+            input.value = '';
+            addBtn.value = 'Add';
+            isEdit = false;
+        }
+    }
+    isEdit = false;
 }
-function deleteItem(event){
-    let itemForDelete = document.getElementById(event.target.id);
+function deleteItem(id){
+    let itemForDelete = document.getElementById(id);
     itemForDelete.remove();
 }
-function editItem(event){
-    let itemForEdit = document.getElementById(event.target.id);
+function editItem(id){
+    let itemForEdit = document.getElementById(id);
     input.value = itemForEdit.textContent;
     addBtn.value = "Edit";
+    addBtn.setAttribute('id', 'edit');
+    isEdit = true;
+    // var editBtn = document.querySelector('#edit');
+    // let idEditItem = itemForEdit.id;
+    // editBtn.addEventListener('click', function(e){
+    //     itemForEdit.textContent = input.value;
+    // })
 }
 // completed tasks add to CompletedList 
 function complete(id){
