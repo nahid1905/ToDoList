@@ -13,6 +13,10 @@ let isEdit;
 
 let id = 0;
 
+
+addBtn.addEventListener('click', add);
+
+
 // create item template
 function createToDoItem(itemId){
     let item = document.createElement('div');
@@ -41,18 +45,15 @@ function createToDoItem(itemId){
     editBtn = buttons.appendChild(editBtn);  
     editBtn.setAttribute('class', 'fa fa-edit');
     editBtn.setAttribute('id', itemId);
-    editBtn.addEventListener('click', function(){
-        editItem(itemId);
-    });
+    editBtn.addEventListener('click', () => editItem(itemId));
 
     trashBtn = buttons.appendChild(trashBtn);
     trashBtn.setAttribute('class', 'fa fa-trash');
     trashBtn.setAttribute('id', itemId);
-    trashBtn.addEventListener('click', function(){
-        deleteItem(itemId);
-    });
+    trashBtn.addEventListener('click', () => deleteItem(itemId));
     toDo.appendChild(item);
 }
+
 
 function add(){
     event.preventDefault();
@@ -110,13 +111,21 @@ function complete(id){
 // unchecked tasks back to todolist from completedlist
 function uncomplete(id){
     let itemForUncomplete = document.getElementById(id);
-    // check.checked = false;
     toDo.appendChild(itemForUncomplete);
     itemForUncomplete.classList.remove('completed');
 }
-addBtn.addEventListener('click', add);
+
 
 // drag and drop
+
+//   allToDoItems.forEach(function(item) {
+//     item.addEventListener('dragstart', handleDragStart, false);
+//     item.addEventListener('dragover', handleDragOver, false);
+//     item.addEventListener('dragenter', handleDragEnter, false);
+//     item.addEventListener('dragleave', handleDragLeave, false);
+//     item.addEventListener('dragend', handleDragEnd, false);
+// });
+
 for (var i = 0; i < allToDoItems.length; i++) {
     allToDoItems[i].addEventListener('dragstart', function(e) {
         e.dataTransfer.effectAllowed = 'move';
@@ -139,7 +148,7 @@ dropZoneCompleted.addEventListener('dragover', function(e) {
 dropZoneCompleted.addEventListener('drop', function(e) {
     if (e.preventDefault) e.preventDefault(); 
     if (e.stopPropagation) e.stopPropagation(); 
-    complete(1);
+    complete(e.target.id);
     this.innerHTML += e.dataTransfer.getData('text');
     document.querySelector('#drag-elements').removeChild(elementDragged);
     elementDragged = null;
